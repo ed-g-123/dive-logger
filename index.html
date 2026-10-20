@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dive Log</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="assets/style.css?v=8">
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+</head>
+<body>
+<header>
+  <h1>🤿 Dive Log</h1>
+  <div id="stat-cards"></div>
+</header>
+
+<div id="trips" role="group" aria-label="Filter by trip"></div>
+
+<div id="controls">
+  <select id="f-mode">
+    <option value="all">All dives</option>
+    <option value="opencircuit" selected>Scuba</option>
+    <option value="other">Snorkel / other</option>
+  </select>
+  <select id="f-year"><option value="all">All years</option></select>
+  <input id="f-site" type="search" placeholder="Filter by site…">
+  <span id="count"></span>
+</div>
+
+<div id="layout">
+  <div id="left">
+   <div id="table-wrap">
+    <table id="dive-table">
+      <thead><tr>
+        <th>#</th><th>Date</th><th>Site</th><th>Max</th><th>Time</th><th>Temp</th><th>Gas</th><th></th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+   </div>
+  </div>
+  <div id="right">
+    <div id="map"></div>
+    <div id="map-note"></div>
+    <div id="profile"></div>
+    <div id="detail"></div>
+  </div>
+</div>
+
+<script src="assets/app.js?v=8"></script>
+</body>
+</html>
