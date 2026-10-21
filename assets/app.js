@@ -1,4 +1,5 @@
-const state = { dives: [], filtered: [], selected: null, trip: 'all', trips: [], numbered: new Map() };
+const state = { dives: [], filtered: [], selected: null, trip: 'all', trips: [], numbered: new Map(),
+                divers: [], diver: 'all', groups: new Map() };
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -13,7 +14,12 @@ const isScuba = d => d.dive_mode === 'opencircuit';
 const counted = d => isScuba(d) && !d.suspect;           // dives that feed the totals
 const isNitrox = d => !!(d.gas && d.gas.o2 > 0.21);
 const hasPos = d => d.lat != null && d.lon != null;
-const srcLabel = d => d.sources.length > 1 ? 'merged' : d.sources[0] === 'padi' ? 'PADI' : 'Oceanic+';
+const SRC = { padi: 'PADI', oceanic: 'Oceanic+', shearwater: 'Shearwater' };
+const srcLabel = d => d.sources.length > 1 ? 'merged' : (SRC[d.sources[0]] || d.sources[0]);
+const diverOf = id => state.divers.find(x => x.id === id) || { id, label: id, colour: '#0e7c7b' };
+const colourOf = d => diverOf(d.diver).colour;
+const mates = d => d.group ? state.dives.filter(x => x.group === d.group && x.id !== d.id) : [];
+const timeLabel = d => d.time ? d.time + (d.time_basis === 'utc' ? ' UTC' : '') : '';
 const byTime = (a, b) => (a.date || '').localeCompare(b.date || '')
   || (a.time || '').localeCompare(b.time || '')
   || String(a.id).localeCompare(String(b.id));
@@ -22,10 +28,12 @@ async function init() {
   const res = await fetch('data/merged_log.json');
   const data = await res.json();
   const asc = data.dives.slice().sort(byTime);
-  let n = 0;
-  for (const d of asc) if (counted(d)) state.numbered.set(d.id, ++n);   // dive numbers: valid scuba only
+  state.divers = data.divers || [];
+  const seen = {};
+  for (const d of asc) if (counted(d)) state.numbered.set(d.id, seen[d.diver] = (seen[d.diver] || 0) + 1);   // numbers run per diver
   state.dives = asc.reverse();                                          // newest first
   state.trips = data.trips || [];
+  buildDiverSwitch();
 
   const years = [...new Set(state.dives.map(d => d.date.slice(0, 4)))].sort().reverse();
   for (const y of years) {
@@ -37,10 +45,34 @@ async function init() {
   applyFilters();
 }
 
+function buildDiverSwitch() {
+  const el = document.getElementById('divers');
+  if (state.divers.length < 2) { el.hidden = true; return; }       // one diver: no switch needed
+  const opts = [{ id: 'all', label: 'All divers', colour: '#0b2545' }].concat(state.divers);
+  el.replaceChildren(...opts.map(v => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.innerHTML = v.id === 'all' ? esc(v.label) : `<i style="background:${esc(v.colour)}"></i>${esc(v.label)}`;
+    b.setAttribute('aria-pressed', String(v.id === state.diver));
+    b.addEventListener('click', () => {
+      state.diver = v.id;
+      [...el.children].forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      buildTripChips();
+      applyFilters();
+    });
+    return b;
+  }));
+}
+
+const inDiver = d => state.diver === 'all' || d.diver === state.diver;
+
 function buildTripChips() {
   const el = document.getElementById('trips');
-  const list = [{ id: 'all', label: 'All trips', n: state.dives.filter(counted).length }]
-    .concat(state.trips.slice().reverse().map(t => ({ ...t, n: state.dives.filter(d => d.trip === t.id && counted(d)).length })));
+  const mine = state.dives.filter(inDiver);
+  const trips = state.trips.filter(t => mine.some(d => d.trip === t.id));
+  if (state.trip !== 'all' && !trips.some(t => t.id === state.trip)) state.trip = 'all';
+  const list = [{ id: 'all', label: 'All trips', n: mine.filter(counted).length }]
+    .concat(trips.slice().reverse().map(t => ({ ...t, n: mine.filter(d => d.trip === t.id && counted(d)).length })));
   el.replaceChildren(...list.map(t => {
     const b = document.createElement('button');
     b.type = 'button';
@@ -60,6 +92,7 @@ function applyFilters() {
   const year = document.getElementById('f-year').value;
   const site = document.getElementById('f-site').value.trim().toLowerCase();
   state.filtered = state.dives.filter(d => {
+    if (!inDiver(d)) return false;
     if (state.trip !== 'all' && d.trip !== state.trip) return false;
     if (mode === 'opencircuit' && !isScuba(d)) return false;
     if (mode === 'other' && isScuba(d)) return false;
@@ -86,8 +119,12 @@ function renderStats() {
   const avg = depths.length ? (depths.reduce((a, b) => a + b, 0) / depths.length).toFixed(1) : null;
   const temps = ds.map(d => d.water_temp_c).filter(t => t != null);
   const nitrox = ds.filter(isNitrox).length;
+  const split = state.diver === 'all' && state.divers.length > 1
+    ? state.divers.map(v => `${v.label} ${ds.filter(d => d.diver === v.id).length}`).join(' · ') : '';
+  const together = new Set(ds.filter(d => d.group).map(d => d.group)).size;
   const cards = [
-    [ds.length, 'scuba dives', free ? `plus ${free} freedive${free === 1 ? '' : 's'}` : ''],
+    [ds.length, 'scuba dives', [split, together && state.diver === 'all' ? `${together} together` : '',
+                                free ? `plus ${free} freedive${free === 1 ? '' : 's'}` : ''].filter(Boolean).join(' · ')],
     [fmt.time(Math.round(mins)), 'bottom time', ds.length ? `avg ${Math.round(mins / ds.length)} min a dive` : ''],
     [fmt.n(deepest?.max_depth_m, ' m'), 'deepest', deepest ? `${fmt.date(deepest.date)} · ${deepest.site || ''}` : ''],
     [fmt.n(avg, ' m'), 'average max depth', ''],
@@ -113,8 +150,8 @@ function renderTable() {
     const num = state.numbered.get(d.id);
     tr.innerHTML = `
       <td>${num ?? '—'}</td>
-      <td>${fmt.date(d.date)}${d.time ? ' ' + esc(d.time) : ''}</td>
-      <td>${esc(d.site) || '—'} <span class="badge src">${srcLabel(d)}</span>${d.suspect ? ' <span class="badge warn">flagged</span>' : ''}</td>
+      <td>${fmt.date(d.date)}${d.time ? ' ' + esc(timeLabel(d)) : ''}</td>
+      <td>${state.diver === 'all' && state.divers.length > 1 ? `<span class="diver-chip" style="background:${esc(colourOf(d))}">${esc(diverOf(d.diver).label)}</span> ` : ''} ${d.group ? `<span class="badge together" title="Dived together with ${esc(mates(d).map(m => diverOf(m.diver).label).join(', '))}">🤗</span> ` : ''} ${esc(d.site) || '—'} ${d.suspect ? ' <span class="badge warn">flagged</span>' : ''}</td>
       <td>${fmt.n(d.max_depth_m, ' m')}</td>
       <td>${fmt.time(d.duration_min)}</td>
       <td>${fmt.n(d.water_temp_c, '°')}</td>
@@ -130,7 +167,12 @@ function renderTable() {
 
 function onRowActivate(id) {
   if (state.selected === id) fitMap();                    // click the selected row again to zoom back out
-  else selectDive(id, { pan: true });
+  else {
+    selectDive(id, { pan: true });
+    // on a phone the details sit below the list, so bring them into view
+    if (window.matchMedia('(max-width: 980px)').matches)
+      document.getElementById('right').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // ------------------------------------------------------------------ map ----
@@ -138,7 +180,26 @@ let map, clusterLayer, pulseLayer;
 
 // Diver-down flag: red with a white diagonal stripe (amber for freedive-only spots), on a pole.
 // Count badge shows when a spot has more than one dive.
-function flagSvg(n, scuba, k = 1) {
+// A small round button beside the pole shows who dived: one diver's colour, or equal slices (half and half
+// for two divers) when more than one diver is involved. Nothing is drawn when the log has one diver.
+function diverButton(cols) {
+  if (!cols.length) return '';
+  const cx = 12, cy = 28.5, r = 5.2;
+  const ring = `stroke="#fff" stroke-width="1.4"`;
+  if (cols.length === 1) return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${cols[0]}" ${ring}/>`;
+  const pt = a => `${(cx + r * Math.sin(a)).toFixed(2)} ${(cy - r * Math.cos(a)).toFixed(2)}`;
+  const slices = cols.map((c, i) => {
+    const a0 = (2 * Math.PI * i) / cols.length + Math.PI;   // first slice is the left half
+    const a1 = (2 * Math.PI * (i + 1)) / cols.length + Math.PI;
+    return `<path d="M${cx} ${cy} L${pt(a0)} A${r} ${r} 0 0 1 ${pt(a1)} Z" fill="${c}"/>`;
+  }).join('');
+  return slices + `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" ${ring}/>`;
+}
+
+const colsFor = ids => state.divers.length > 1
+  ? state.divers.filter(v => ids.includes(v.id)).map(v => v.colour) : [];
+
+function flagSvg(n, scuba, k = 1, cols = []) {
   const field = scuba ? '#d62828' : '#b45f17';
   const badge = n > 1
     ? `<circle cx="29" cy="7" r="7" fill="#0b2545" stroke="#fff" stroke-width="1.2"/>` +
@@ -148,14 +209,25 @@ function flagSvg(n, scuba, k = 1) {
     `<line x1="4" y1="2" x2="4" y2="38" stroke="#0b2545" stroke-width="2.5" stroke-linecap="round"/>` +
     `<rect x="5" y="3" width="22" height="16" rx="1.5" fill="${field}" stroke="#fff" stroke-width="1.2"/>` +
     `<polygon points="5,3 8.5,3 27,16.45 27,19 23.5,19 5,5.55" fill="#fff"/>` +
-    badge + `</svg>`;
+    badge + diverButton(cols) + `</svg>`;
 }
 
 
+// A shared dive is two records; it is drawn once on the map (the first one in the current list).
+function mapDives() {
+  const done = new Set();
+  return state.filtered.filter(d => {
+    if (!hasPos(d) || d.suspect) return false;
+    if (!d.group) return true;
+    if (done.has(d.group)) return false;
+    done.add(d.group);
+    return true;
+  });
+}
+
 function sitePoints() {
   const bySite = {};
-  for (const d of state.filtered) {
-    if (!hasPos(d) || d.suspect) continue;
+  for (const d of mapDives()) {
     const k = d.site || `${d.lat},${d.lon}`;
     (bySite[k] ||= { lat: d.lat, lon: d.lon, dives: 0, max: 0, name: d.site || k, scuba: false });
     bySite[k].dives++;
@@ -178,7 +250,9 @@ function renderMap() {
     return;
   }
   if (!map) {
-    map = L.map('map', { scrollWheelZoom: true });
+    // worldCopyJump: when you pan across the date line the view jumps back to the main copy of the world,
+    // so the flags are always visible instead of being left behind on the first copy.
+    map = L.map('map', { scrollWheelZoom: true, worldCopyJump: true });
     const osm = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
     // OpenStreetMap needs no key (fair-use policy, fine for a personal log). If you later want
     // CARTO tiles, they now need a free key: https://www.carto.com/basemaps/apikey/
@@ -200,7 +274,8 @@ function renderMap() {
           showCoverageOnHover: false,
           iconCreateFunction: c => L.divIcon({
             className: 'site-dot',
-            html: flagSvg(c.getChildCount(), c.getAllChildMarkers().some(m => m.options.scuba)),
+            html: flagSvg(c.getChildCount(), c.getAllChildMarkers().some(m => m.options.scuba), 1,
+                          colsFor([...new Set(c.getAllChildMarkers().flatMap(m => m.options.divers || []))])),
             iconSize: [36, 38], iconAnchor: [4, 38],     // pole foot on the cluster centre
           }),
         })
@@ -222,24 +297,25 @@ function renderMap() {
 
   clusterLayer.clearLayers();
 
-  for (const d of state.filtered) {
-    if (!hasPos(d) || d.suspect) continue;
+  for (const d of mapDives()) {
+    const who = [d, ...mates(d)].filter(inDiver).map(x => x.diver);   // everyone on this flag, within the diver filter
     const k = 0.75;                                          // single-dive flags are a little smaller than cluster flags
     const icon = L.divIcon({
       className: 'site-dot',
-      html: flagSvg(1, isScuba(d), k),
+      html: flagSvg(1, isScuba(d), k, colsFor(who)),
       iconSize: [36 * k, 38 * k],
       iconAnchor: [4 * k, 38 * k],                             // pole foot sits on the dive position
       popupAnchor: [10 * k, -34 * k],
     });
-    L.marker([d.lat, d.lon], { icon, keyboard: false, scuba: isScuba(d), site: d.site, area: d.area })
-      .bindPopup(`<b>${esc(d.site) || 'Unnamed site'}</b><br>${fmt.date(d.date)} · ${fmt.n(d.max_depth_m, ' m')} · ${fmt.time(d.duration_min)}`)
+    L.marker([d.lat, d.lon], { icon, keyboard: false, scuba: isScuba(d), site: d.site, area: d.area, divers: who })
+      .bindPopup(`<b>${esc(d.site) || 'Unnamed site'}</b><br>${fmt.date(d.date)} · ${fmt.n(d.max_depth_m, ' m')} · ${fmt.time(d.duration_min)}` +
+        (state.divers.length > 1 ? `<br>${[d, ...mates(d).filter(inDiver)].map(x => esc(diverOf(x.diver).label)).join(' + ')}` : ''))
       .addTo(clusterLayer)
       .on('click', () => selectDive(d.id, { pan: false }));
   }
   fitMap();
 
-  const missing = state.filtered.filter(d => !hasPos(d) && !d.suspect);
+  const missing = state.filtered.filter(d => !hasPos(d) && !d.suspect && !mates(d).some(m => hasPos(m)));
   const names = [...new Set(missing.map(d => d.site).filter(Boolean))];
   document.getElementById('map-note').textContent = missing.length
     ? `${missing.length} dive${missing.length === 1 ? '' : 's'} not on the map: no position for ${names.join(', ') || 'unnamed site'}. Add it in data/site_coords.json.`
@@ -270,18 +346,24 @@ function selectDive(id, opts = {}) {
   const lim = (d.duration_min || Infinity) * 60 + 60;           // Oceanic+ samples run past the end of the dive
   const pts = (d.profile || []).filter(p => p[0] <= lim);
   const num = state.numbered.get(id);
-  const label = num ? `Dive #${num}` : 'Dive';
+  const label = (state.divers.length > 1 ? diverOf(d.diver).label + ' ' : '') + (num ? `dive #${num}` : 'dive');
+  const trace = (x, name) => {
+    const lm = (x.duration_min || Infinity) * 60 + 60;
+    const q = (x.profile || []).filter(p => p[0] <= lm);
+    return q.length > 2 ? { x: q.map(p => p[0] / 60), y: q.map(p => p[1]), mode: 'lines', name,
+                           line: { color: colourOf(x), width: 2 } } : null;
+  };
+  const traces = [trace(d, diverOf(d.diver).label)].concat(mates(d).map(m => trace(m, diverOf(m.diver).label))).filter(Boolean);
+  if (traces.length) traces[0].fill = 'tozeroy';
   if (typeof Plotly !== 'undefined') Plotly.purge(prof);
   if (pts.length > 2 && typeof Plotly !== 'undefined') {
     prof.innerHTML = '';
-    Plotly.newPlot(prof, [{
-      x: pts.map(p => p[0] / 60), y: pts.map(p => p[1]),
-      mode: 'lines', line: { color: '#0e7c7b', width: 2 }, fill: 'tozeroy', name: 'depth',
-    }], {
+    Plotly.newPlot(prof, traces, {
       margin: { t: 30, r: 16, b: 36, l: 44 },
       xaxis: { title: 'time (min)' },
       yaxis: { title: 'depth (m)', autorange: 'reversed' },
-      title: { text: `${label} profile`, font: { size: 14 } },
+      title: { text: `${label} profile${traces.length > 1 ? ' (shared dive)' : ''}`, font: { size: 14 } },
+      showlegend: traces.length > 1, legend: { orientation: 'h', y: 1.12, x: 1, xanchor: 'right' },
     }, { displayModeBar: false, responsive: true });
   } else {
     const why = d.sources[0] === 'padi' && d.sources.length === 1
@@ -295,8 +377,10 @@ function selectDive(id, opts = {}) {
     ? (isNitrox(d) ? `Nitrox ${Math.round(d.gas.o2 * 100)}%` : d.gas.assumed ? 'Air (assumed)' : 'Air')
     : '—';
   const rows = [
+    ['Diver', state.divers.length > 1 ? esc(diverOf(d.diver).label) : ''],
+    ['Together', mates(d).map(m => esc(diverOf(m.diver).label)).join(', ')],
     ['Site', esc(d.site)],
-    ['Date', fmt.date(d.date) + (d.time ? ' · ' + esc(d.time) : '')],
+    ['Date', fmt.date(d.date) + (d.time ? ' · ' + esc(timeLabel(d)) : '')],
     ['Max depth', fmt.n(d.max_depth_m, ' m')], ['Duration', fmt.time(d.duration_min)],
     ['Water temp', d.water_temp_c != null ? fmt.n(d.water_temp_c, ' °C') : ''],
     ['Gas', isScuba(d) ? gas : ''],
@@ -306,13 +390,13 @@ function selectDive(id, opts = {}) {
     ['Dive center', esc(d.dive_center)], ['Visibility', esc(d.visibility)],
     ['Weight', d.weight != null ? fmt.n(d.weight, ' kg') : ''], ['Suit', esc(d.suit)],
     ['Position', hasPos(d) ? `${d.lat.toFixed(4)}, ${d.lon.toFixed(4)}` : 'not on the map'],
-    ['Sources', d.sources.map(s => s === 'padi' ? 'PADI' : 'Oceanic+').join(' + ')],
+    ['Sources', d.sources.map(s => SRC[s] || s).join(' + ')],
     ['Flag', d.suspect ? 'Under 5 minutes, left out of totals' : ''],
     ['Notes', esc(d.notes)],
   ].filter(([k, v]) => v != null && v !== '');
 
   document.getElementById('detail').innerHTML =
-    `<h3>${label}${d.title ? ' — ' + esc(d.title) : ''}</h3><dl>` +
+    `<h3>${label[0].toUpperCase() + label.slice(1)}${d.title ? ' — ' + esc(d.title) : ''}</h3><dl>` +
     rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('') + '</dl>';
 
   if (map && pulseLayer) {                                  // a pulsing ring marks the selected dive

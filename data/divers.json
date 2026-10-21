@@ -1,0 +1,14 @@
+{
+  "EG": {
+    "name": "EG",
+    "label": "EG",
+    "colour": "#0e7c7b",
+    "public": { "time_of_day": true, "buddies": true, "notes": true, "venue": true, "profile": true, "temperature": true, "links": true }
+  },
+  "RA": {
+    "name": "RA",
+    "label": "RA",
+    "colour": "#8a4fb8",
+    "public": { "time_of_day": false, "buddies": false, "notes": false, "venue": false, "profile": true, "temperature": true, "links": true }
+  }
+}

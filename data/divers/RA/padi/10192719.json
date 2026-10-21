@@ -1,0 +1,73 @@
+{
+  "data": {
+    "logbook_logs": [
+      {
+        "id": 10192719,
+        "log_type": "Recreational",
+        "log_course": null,
+        "log_number": null,
+        "dive_type": "Boat",
+        "dive_title": "Greece - Dive 1",
+        "dive_date": "2023-07-07T17:34:52",
+        "dive_location": "Seal Cave",
+        "memsys_member_number": null,
+        "status": "Publish",
+        "adventure_dive": null,
+        "depth_times": [
+          {
+            "max_depth": 19.0,
+            "bottom_time": 50,
+            "time_in": null,
+            "time_out": null
+          }
+        ],
+        "skills": [
+          {
+            "dive_skills": null
+          }
+        ],
+        "conditions": [
+          {
+            "water_type": "Salt",
+            "body_of_water": "Ocean",
+            "weather": "Sunny",
+            "air_temp": 34.0,
+            "surface_water_temp": 24.0,
+            "bottom_water_temp": 24.0,
+            "visibility": "Average",
+            "visibility_distance": null,
+            "wave_condition": "NoWaves",
+            "current": "NoCurrent",
+            "surge": "SomeSurge"
+          }
+        ],
+        "equipment": [
+          {
+            "suit_type": "FullSuit_5mm",
+            "weight": 4.0,
+            "weight_type": "Heavy",
+            "additional_equipment": [
+              "Boots"
+            ],
+            "cylinder_type": "Steel",
+            "cylinder_size": 12.0,
+            "gas_mixture": "Air",
+            "oxygen": 21,
+            "nitrogen": 79,
+            "helium": 0,
+            "starting_pressure": 190.0,
+            "ending_pressure": 60.0
+          }
+        ],
+        "experiences": [
+          {
+            "feeling": "Good",
+            "notes": null,
+            "buddies": "Ed",
+            "dive_center": "Athen\u2019s diver\u2019s club"
+          }
+        ]
+      }
+    ]
+  }
+}

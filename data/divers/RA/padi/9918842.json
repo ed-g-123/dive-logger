@@ -1,0 +1,71 @@
+{
+  "data": {
+    "logbook_logs": [
+      {
+        "id": 9918842,
+        "log_type": "Recreational",
+        "log_course": null,
+        "log_number": null,
+        "dive_type": "Boat",
+        "dive_title": "Jamaica - Day 4 - 9am dive",
+        "dive_date": "2023-05-22T00:00:00",
+        "dive_location": "Negril, Jamaica",
+        "memsys_member_number": null,
+        "status": "Publish",
+        "adventure_dive": null,
+        "depth_times": [
+          {
+            "max_depth": 30.0,
+            "bottom_time": 30,
+            "time_in": null,
+            "time_out": null
+          }
+        ],
+        "skills": [
+          {
+            "dive_skills": null
+          }
+        ],
+        "conditions": [
+          {
+            "water_type": "Salt",
+            "body_of_water": "Ocean",
+            "weather": "Sunny",
+            "air_temp": null,
+            "surface_water_temp": null,
+            "bottom_water_temp": null,
+            "visibility": "Average",
+            "visibility_distance": null,
+            "wave_condition": "NoWaves",
+            "current": "NoCurrent",
+            "surge": "SomeSurge"
+          }
+        ],
+        "equipment": [
+          {
+            "suit_type": "NoExposure",
+            "weight": 1.8,
+            "weight_type": "Good",
+            "additional_equipment": [],
+            "cylinder_type": null,
+            "cylinder_size": null,
+            "gas_mixture": "Air",
+            "oxygen": 21,
+            "nitrogen": 79,
+            "helium": 0,
+            "starting_pressure": null,
+            "ending_pressure": null
+          }
+        ],
+        "experiences": [
+          {
+            "feeling": "Good",
+            "notes": null,
+            "buddies": "Ed and the group",
+            "dive_center": "Sandals Negril"
+          }
+        ]
+      }
+    ]
+  }
+}

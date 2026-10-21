@@ -1,61 +1,74 @@
 # Dive Log Dashboard
 
-A static diving logbook dashboard that merges **PADI** (JSON export) and **Oceanic+** (UDDF)
-logs into one unified `data/merged_log.json`, served on GitHub Pages.
+A static, multi-diver dive-log dashboard for GitHub Pages. Python (standard library only) turns each
+diver's exports into one `data/merged_log.json`; the page (Leaflet map, Plotly profile) just reads it.
 
-## How it works
+Divers: **EG** (Oceanic+ UDDF + PADI) and **RA** (Shearwater Cloud + PADI, to be added).
 
-1. Drop files into `data/`:
-   - `data/padi/*.json` — PADI logbook JSON export
-   - `data/oceanic/*.uddf` — Oceanic+ UDDF export (whole history every time is fine)
-2. Run `python3 scripts/merge.py` (stdlib only, no dependencies) — or let GitHub Actions
-   run it automatically on every push (`.github/workflows/build.yml`).
-3. Open `index.html` (or your `https://<user>.github.io/<repo>/` URL).
+## Folder layout
 
-Merging: Oceanic+ wins for stats/depth profile; PADI wins for site names, buddies, notes.
-Same dive in both = same date + max depth within 3 m.
-
-## Map positions for PADI dives
-
-PADI exports carry a site name but no coordinates. Add the name to `data/site_coords.json`:
-
-```json
-{ "Sandals Negril": { "lat": 18.3332, "lon": -78.338 } }
+```
+data/
+  divers.json                  who is in the log, colours, and what is public
+  divers/EG/oceanic/*.uddf     Oceanic+ UDDF exports (the whole history each time is fine)
+  divers/EG/padi/*.json        PADI logbook exports
+  divers/RA/shearwater/*.json  slim extracts made from Shearwater Cloud (never the raw .db)
+  divers/RA/padi/*.json        RA's PADI exports: just drop them in
+  site_aliases.json            Oceanic+ site ids -> readable names (your edits are kept)
+  site_coords.json             site name -> lat/lon, for dives with no position
+  links.json                   manual overrides for shared dives
+  review.json                  (generated) possible shared dives that need a decision
+  merged_log.json              (generated) what the page reads
+pipeline/                      adapters, merge, link, publish, build
+tests/                         python3 -m unittest discover -s tests
+private/                       raw device files; git-ignored, never uploaded
 ```
 
-`merge.py` applies it to PADI dives and lists any site names still missing a position.
-The current "Sandals Negril" entry is borrowed from your "Sandals Beach" site; replace it
-with the exact position. PADI dives are all treated as air, and PADI times of day are ignored.
+## Everyday use
 
-## Flagged dives and trips
+1. Put new files in the diver's folder (GitHub web upload is fine). The workflow runs the tests, rebuilds
+   `merged_log.json` and commits it; or run `python3 -m pipeline.build` locally.
+2. Open the site, or locally `python3 -m http.server` and http://localhost:8000.
 
-- Scuba records under 5 minutes are flagged (`suspect: true`), shown faded, and left out of totals.
-- Dives are grouped into trips (a gap of more than 7 days starts a new trip); the page shows trip chips.
+### Adding RA's Shearwater dives
 
-## Editing site names
+Keep the raw `.db` in `private/RA/shearwater/`. It holds a device serial, UUIDs, exact timestamps, resort names,
+buddy and notes, and its file name contains an email address. Then:
 
-Oceanic+ site names are opaque hashes (`site_6ad4de…`). On first run the merge script
-guesses a region name from coordinates and writes `data/site_aliases.json`.
-**Edit that file** to put real site names in ("Blue Hole", "The Canyon", …) and re-run
-the merge — your edits persist because known ids are never overwritten.
+```
+python3 -m pipeline.extract_shearwater private/RA/shearwater/shearwater_cloud.db RA
+```
 
-## Known Oceanic+ quirks (handled by the merge script)
+This writes `data/divers/RA/shearwater/extracted.json`: depth, duration, gas, temperature, a 10 s profile, start time
+to the minute and the site name. Venue, buddy and notes are left out unless you add `--keep venue,buddy,notes`.
 
-| Quirk | Handling |
-|---|---|
-| Temperatures in Kelvin (302.44) | Converted to °C (29.3) |
-| Tank pressure in Pascal (2.2E7) | Converted to bar (220) |
-| Malformed offsets (`+00:03` = UTC+3) | Offset dropped; local wall time kept |
-| Site names are hashes | `data/site_aliases.json` mapping |
-| Apnoe entries are snorkel sessions | Kept, tagged `dive_mode: "apnoe"`, filterable |
+## How the data is combined
+
+1. **Per diver:** device dives (Oceanic+ or Shearwater) are matched to that diver's PADI entries (same date,
+   depth within 3 m). The device wins numbers, profile and time; PADI wins site and title and fills empty fields.
+2. **Between divers:** a dive both divers did stays as two records joined by a `group`. They are linked when depth
+   (2.5 m) and duration (7 min) agree and the clock difference is a whole number of hours (devices differ in
+   time zone). A trip-wide clock offset separates back-to-back dives. Unsure pairs go to `data/review.json`.
+   Override in `data/links.json`: `{"link": [["EG:uddf:...", "RA:sw:..."]], "unlink": [[...]]}`.
+3. A linked dive is drawn once on the map and shows both profiles on one chart; gaps (site name, position) are
+   filled from the partner record, never overwritten.
+4. **Trips:** a gap of more than 7 days starts a new trip.
+
+## Assumptions
+
+- PADI entries are treated as **air**; PADI time of day is ignored (date only).
+- Oceanic+ start times are kept as written; Shearwater times are UTC and labelled "UTC" on the page.
+- Scuba records under 5 minutes are flagged, shown faded and left out of totals. Freedives are kept but not counted as scuba.
+- Oceanic+ quirks handled: Kelvin temperatures, malformed offsets (`-00:05` = UTC-5), site ids as names, samples past the end of the dive.
 
 ## Privacy
 
-If the repo is **public**, anyone can see your dive sites and dates (plus coordinates
-in this README-adjacent data). Make the repo private (GitHub Pro required for private
-Pages), or strip coordinates in `scripts/merge.py` before committing.
+`data/divers.json` sets what is published per diver (`time_of_day`, `buddies`, `notes`, `venue`, `profile`,
+`temperature`, `links`). RA's defaults are strict: no time of day, buddies, notes or venue. Hiding `links` for a
+diver removes the shared-dive link for both. A free GitHub Pages site is **public**, so get RA's agreement first,
+and remember that dive sites and dates are visible to everyone.
 
-## Dev locally
+## Map positions
 
-Any static server works: `python3 -m http.server` then open http://localhost:8000
-(fetching JSON over file:// is blocked by browsers).
+Dives without coordinates are listed under the map. Add the site name to `data/site_coords.json`
+(`{"Angelita": {"lat": 20.3, "lon": -87.0}}`, matched case-insensitively) and rebuild.

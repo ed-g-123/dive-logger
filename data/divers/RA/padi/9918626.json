@@ -1,0 +1,71 @@
+{
+  "data": {
+    "logbook_logs": [
+      {
+        "id": 9918626,
+        "log_type": "Recreational",
+        "log_course": null,
+        "log_number": null,
+        "dive_type": "Boat",
+        "dive_title": "Australia - Day 1 Afternoon Dive",
+        "dive_date": "2018-05-05T00:00:00",
+        "dive_location": "Pinnacle Reef, Green Island, Australia",
+        "memsys_member_number": null,
+        "status": "Publish",
+        "adventure_dive": null,
+        "depth_times": [
+          {
+            "max_depth": 30.0,
+            "bottom_time": 30,
+            "time_in": null,
+            "time_out": null
+          }
+        ],
+        "skills": [
+          {
+            "dive_skills": null
+          }
+        ],
+        "conditions": [
+          {
+            "water_type": "Salt",
+            "body_of_water": "Ocean",
+            "weather": "Partly Cloudy",
+            "air_temp": null,
+            "surface_water_temp": null,
+            "bottom_water_temp": null,
+            "visibility": "Average",
+            "visibility_distance": null,
+            "wave_condition": "SmallWaves",
+            "current": "SomeCurrent",
+            "surge": "SomeSurge"
+          }
+        ],
+        "equipment": [
+          {
+            "suit_type": "FullSuit_3mm",
+            "weight": null,
+            "weight_type": "Good",
+            "additional_equipment": [],
+            "cylinder_type": null,
+            "cylinder_size": null,
+            "gas_mixture": "Air",
+            "oxygen": 21,
+            "nitrogen": 79,
+            "helium": 0,
+            "starting_pressure": null,
+            "ending_pressure": null
+          }
+        ],
+        "experiences": [
+          {
+            "feeling": "Good",
+            "notes": "First dive on the dive boat",
+            "buddies": "Jade (and the group)",
+            "dive_center": "Coral Sea Dreaming"
+          }
+        ]
+      }
+    ]
+  }
+}
