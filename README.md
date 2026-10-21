@@ -57,7 +57,12 @@ to the minute and the site name. Venue, buddy and notes are left out unless you 
 ## Assumptions
 
 - PADI entries are treated as **air**; PADI time of day is ignored (date only).
-- Oceanic+ start times are kept as written; Shearwater times are UTC and labelled "UTC" on the page.
+- Oceanic+ start times are local time (the offset is written as hours in the minutes slot, `-00:05` = UTC-5).
+- Shearwater start times have no time zone: on some trips the device clock was UTC, on others it was already local.
+  `data/clocks.json` says which, per diver and trip, so the page can show local times:
+  `{"RA:2026-10": {"clock": "utc", "tz_offset_h": -5}}` converts UTC to local; `{"RA:2023-10": {"clock": "local"}}` keeps the
+  time. Trips not listed stay UTC and are labelled "UTC" on the page. To check a trip, compare a shared dive's Shearwater
+  time with the Oceanic+ time: 0 minutes apart means the clock was local; the zone offset apart means UTC.
 - Scuba records under 5 minutes are flagged, shown faded and left out of totals. Freedives are kept but not counted as scuba.
 - Oceanic+ quirks handled: Kelvin temperatures, malformed offsets (`-00:05` = UTC-5), site ids as names, samples past the end of the dive.
 

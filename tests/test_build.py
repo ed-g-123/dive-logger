@@ -118,6 +118,54 @@ class TripDefaultTests(unittest.TestCase):
         self.assertIsNone(d['lat'])
 
 
+class ClockTests(unittest.TestCase):
+    def run_clock(self, cfg, **kw):
+        from helpers import dive
+        from pipeline import clocks
+        d = dive(id='RA:sw:1', diver='RA', sources=['shearwater'], trip='2026-10', time_basis='utc', **kw)
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / 'c.json'
+            p.write_text(json.dumps(cfg))
+            n = clocks.localise([d], p)
+        return d, n
+
+    def test_utc_clock_is_shifted_to_local_time(self):
+        d, n = self.run_clock({'RA:2026-10': {'clock': 'utc', 'tz_offset_h': -5}}, date='2026-10-07', time='14:41')
+        self.assertEqual((d['date'], d['time'], d['time_basis'], n), ('2026-10-07', '09:41', 'local', 1))
+
+    def test_shift_can_change_the_date(self):
+        d, _ = self.run_clock({'RA:2026-10': {'clock': 'utc', 'tz_offset_h': -5}}, date='2026-10-07', time='02:10')
+        self.assertEqual((d['date'], d['time']), ('2026-10-06', '21:10'))
+
+    def test_local_clock_is_only_relabelled(self):
+        d, _ = self.run_clock({'RA:2026-10': {'clock': 'local'}}, date='2026-10-07', time='14:41')
+        self.assertEqual((d['time'], d['time_basis']), ('14:41', 'local'))
+
+    def test_day_entry_beats_trip_entry(self):
+        cfg = {'RA:2026-10': {'clock': 'utc', 'tz_offset_h': -5}, 'RA:2026-10-07': {'clock': 'local'}}
+        d, _ = self.run_clock(cfg, date='2026-10-07', time='14:41')
+        self.assertEqual((d['time'], d['time_basis']), ('14:41', 'local'))
+        other, _ = self.run_clock(cfg, date='2026-10-08', time='14:41')
+        self.assertEqual(other['time'], '09:41')
+
+    def test_dive_id_entry_beats_day_entry(self):
+        cfg = {'RA:2026-10-07': {'clock': 'local'}, 'RA:sw:1': {'clock': 'utc', 'tz_offset_h': -5}}
+        d, _ = self.run_clock(cfg, date='2026-10-07', time='14:41')
+        self.assertEqual(d['time'], '09:41')
+
+    def test_unlisted_trip_stays_utc_and_oceanic_is_untouched(self):
+        d, n = self.run_clock({}, date='2026-10-07', time='14:41')
+        self.assertEqual((d['time'], d['time_basis'], n), ('14:41', 'utc', 0))
+        from helpers import dive
+        from pipeline import clocks
+        o = dive(id='EG:1', trip='2026-10', time_basis='local', sources=['oceanic'], time='09:30')
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / 'c.json'
+            p.write_text(json.dumps({'EG:2026-10': {'clock': 'utc', 'tz_offset_h': -5}}))
+            self.assertEqual(clocks.localise([o], p), 0)
+        self.assertEqual(o['time'], '09:30')
+
+
 class TripTests(unittest.TestCase):
     def test_gap_starts_new_trip_and_same_month_gets_suffix(self):
         from helpers import dive

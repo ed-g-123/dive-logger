@@ -81,7 +81,7 @@ def parse_root(root, diver):
             diver=diver,
             sources=['oceanic'],
             source_ids={'oceanic': d.get('id')},
-            date=date, time=hhmm, time_basis='unknown',
+            date=date, time=hhmm, time_basis='local',
             lat=sites[ref][0], lon=sites[ref][1],
             max_depth_m=round(float(_text(after, 'u:greatestdepth')), 1),
             duration_min=round(dur_s / 60.0, 1),

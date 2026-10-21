@@ -8,7 +8,7 @@ Folder layout (one folder per diver, named by the diver id in data/divers.json):
     data/divers/<ID>/padi/*.json            PADI logbook exports
     data/divers/<ID>/oceanic/*.uddf         Oceanic+ UDDF exports
     data/divers/<ID>/shearwater/*.json      slim extracts made by pipeline.extract_shearwater
-    data/site_aliases.json  data/site_coords.json  data/trip_defaults.json  data/links.json   (shared)
+    data/site_aliases.json  data/site_coords.json  data/trip_defaults.json  data/clocks.json  data/links.json   (shared)
 
 Stages: read each source -> name sites -> merge each diver's sources -> link dives that
 divers shared -> share positions within a link -> trips -> privacy filter -> write.
@@ -18,7 +18,7 @@ import sys
 from datetime import date as _date
 from pathlib import Path
 
-from . import link, merge, publish, sites
+from . import clocks, link, merge, publish, sites
 from .adapters import oceanic, padi, shearwater
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -83,6 +83,7 @@ def build(root=ROOT, write=True, log=print):
     all_dives.sort(key=merge.sort_key)
     trips = build_trips(all_dives)
     sites.apply_trip_defaults(all_dives, data / 'trip_defaults.json')
+    clocks.localise(all_dives, data / 'clocks.json')
     sites.set_areas(all_dives)
     unplaced = sorted({d['site'] for d in all_dives if d['lat'] is None and d.get('site')})
 
