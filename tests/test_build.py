@@ -175,6 +175,42 @@ class TripTests(unittest.TestCase):
         self.assertEqual([d['trip'] for d in ds], ['2026-10', '2026-10', '2026-10-2', '2026-10-2'])
 
 
+class NamedTripTests(unittest.TestCase):
+    def dives(self, *dates):
+        from helpers import dive
+        return [dive(id=str(i), date=d) for i, d in enumerate(dates)]
+
+    def test_named_range_claims_dives_of_all_divers_and_rest_is_automatic(self):
+        ds = self.dives('2026-10-04', '2026-10-09', '2026-11-20', '2026-11-21')
+        trips = build.build_trips(ds, [{'id': 'jamaica-2026', 'name': 'Jamaica', 'start': '2026-10-01', 'end': '2026-10-10'}])
+        self.assertEqual([(t['id'], t['label'], t['n']) for t in trips], [('jamaica-2026', 'Jamaica', 2), ('2026-11', 'Nov 2026', 2)])
+        self.assertEqual([d['trip'] for d in ds], ['jamaica-2026', 'jamaica-2026', '2026-11', '2026-11'])
+        self.assertTrue(trips[0]['named'])
+        self.assertNotIn('named', trips[1])
+
+    def test_named_trip_with_no_dives_is_left_out(self):
+        trips = build.build_trips(self.dives('2026-10-04'), [{'id': 'x', 'name': 'X', 'start': '2020-01-01', 'end': '2020-01-05'}])
+        self.assertEqual([t['id'] for t in trips], ['2026-10'])
+
+    def test_trips_are_listed_by_date_and_use_real_dive_dates(self):
+        ds = self.dives('2024-02-02', '2023-05-20')
+        trips = build.build_trips(ds, [{'id': 'tulum', 'name': 'Tulum', 'start': '2024-01-01', 'end': '2024-03-01'}])
+        self.assertEqual([t['id'] for t in trips], ['2023-05', 'tulum'])
+        self.assertEqual((trips[1]['start'], trips[1]['end']), ('2024-02-02', '2024-02-02'))
+
+    def test_automatic_id_never_reuses_a_chosen_id(self):
+        ds = self.dives('2026-10-04', '2026-11-20')
+        trips = build.build_trips(ds, [{'id': '2026-11', 'name': 'Mine', 'start': '2026-10-01', 'end': '2026-10-10'}])
+        self.assertEqual(sorted(t['id'] for t in trips), ['2026-11', '2026-11-auto'])
+
+    def test_bad_config_is_an_error(self):
+        with self.assertRaises(ValueError):
+            build.build_trips(self.dives('2026-10-04'), [{'id': 'a', 'start': '2026-10-10', 'end': '2026-10-01'}])
+        with self.assertRaises(ValueError):
+            build.build_trips(self.dives('2026-10-04'), [{'id': 'a', 'start': '2026-10-01', 'end': '2026-10-10'},
+                                                         {'id': 'a', 'start': '2026-11-01', 'end': '2026-11-10'}])
+
+
 class SiteTests(unittest.TestCase):
     def test_guess_region(self):
         self.assertEqual(sites.guess_region(18.33, -78.35), 'Negril, Jamaica')

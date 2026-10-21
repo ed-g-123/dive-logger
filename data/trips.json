@@ -1,0 +1,80 @@
+[
+ {
+  "id": "great-barrier-reef-2006",
+  "name": "Great Barrier Reef 2006",
+  "start": "2006-08-20",
+  "end": "2006-08-22"
+ },
+ {
+  "id": "negril-2007",
+  "name": "Jamaica 2007",
+  "start": "2007-07-03",
+  "end": "2007-07-05"
+ },
+ {
+  "id": "kona-2008",
+  "name": "Hawaii 2008",
+  "start": "2008-07-20",
+  "end": "2008-07-21"
+ },
+ {
+  "id": "ionian-2012",
+  "name": "Sunsail 2012",
+  "start": "2012-09-23",
+  "end": "2012-09-23"
+ },
+ {
+  "id": "green-island-2018",
+  "name": "Great Barrier Reef 2018",
+  "start": "2018-05-05",
+  "end": "2018-05-06"
+ },
+ {
+  "id": "majorca-2018",
+  "name": "Majorca 2018",
+  "start": "2018-06-02",
+  "end": "2018-06-02"
+ },
+ {
+  "id": "jamaica-2023",
+  "name": "Jamaica 2023",
+  "start": "2023-05-19",
+  "end": "2023-05-24"
+ },
+ {
+  "id": "greece-2023",
+  "name": "Greece 2023",
+  "start": "2023-07-07",
+  "end": "2023-07-07"
+ },
+ {
+  "id": "egypt-2023",
+  "name": "Egypt 2023",
+  "start": "2023-10-06",
+  "end": "2023-10-10"
+ },
+ {
+  "id": "tulum-2024",
+  "name": "Tulum Cenotes 2024",
+  "start": "2024-02-02",
+  "end": "2024-02-03"
+ },
+ {
+  "id": "cabo-2025",
+  "name": "Cabo San Lucas 2025",
+  "start": "2025-01-30",
+  "end": "2025-01-31"
+ },
+ {
+  "id": "bahamas-2026",
+  "name": "Bahamas 2026",
+  "start": "2026-01-29",
+  "end": "2026-01-30"
+ },
+ {
+  "id": "jamaica-2026",
+  "name": "Jamaica 2026",
+  "start": "2026-10-04",
+  "end": "2026-10-10"
+ }
+]

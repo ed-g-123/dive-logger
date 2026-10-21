@@ -1,23 +1,23 @@
 {
-  "RA:2023-10": {
+  "RA:egypt-2023": {
     "clock": "local",
-    "note": "Confirmed: Shearwater time matched Oceanic+ local time (Greece, UTC+3) on this trip."
+    "note": "Confirmed: Shearwater time matched Oceanic+ local time (Egypt, UTC+3 with daylight saving) on this trip."
   },
-  "RA:2026-10": {
+  "RA:jamaica-2026": {
     "clock": "utc",
     "tz_offset_h": -5,
     "note": "Jamaica, UTC-5. Shearwater was 5h11m ahead of Oceanic+ local time."
   },
-  "RA:2024-02": {
+  "RA:tulum-2024": {
     "clock": "utc",
     "tz_offset_h": -5,
     "note": "Tulum, Quintana Roo: UTC-5 all year. Inferred: as UTC the dives fall at 12:40-18:54 local; read as local they would run to 23:54."
   },
-  "RA:2025-01": {
+  "RA:cabo-2025": {
     "clock": "local",
     "note": "Cabo San Lucas (UTC-7). Default for the trip; the 30th is overridden below."
   },
-  "RA:2026-01": {
+  "RA:bahamas-2026": {
     "clock": "local",
     "note": "Bahamas (UTC-5). Inferred: converting from UTC would put dives at 05:44 and 07:13, so the clock was already local."
   },

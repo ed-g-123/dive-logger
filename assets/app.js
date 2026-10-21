@@ -77,6 +77,7 @@ function buildTripChips() {
     const b = document.createElement('button');
     b.type = 'button';
     b.innerHTML = `${esc(t.label)}<small>${t.n}</small>`;
+    if (t.start) b.title = t.start === t.end ? fmt.date(t.start) : `${fmt.date(t.start)} – ${fmt.date(t.end)}`;
     b.setAttribute('aria-pressed', String(t.id === state.trip));
     b.addEventListener('click', () => {
       state.trip = t.id;

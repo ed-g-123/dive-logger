@@ -8,7 +8,7 @@ Folder layout (one folder per diver, named by the diver id in data/divers.json):
     data/divers/<ID>/padi/*.json            PADI logbook exports
     data/divers/<ID>/oceanic/*.uddf         Oceanic+ UDDF exports
     data/divers/<ID>/shearwater/*.json      slim extracts made by pipeline.extract_shearwater
-    data/site_aliases.json  data/site_coords.json  data/trip_defaults.json  data/clocks.json  data/links.json   (shared)
+    data/site_aliases.json  data/site_coords.json  data/trips.json  data/trip_defaults.json  data/clocks.json  data/links.json   (shared)
 
 Stages: read each source -> name sites -> merge each diver's sources -> link dives that
 divers shared -> share positions within a link -> trips -> privacy filter -> write.
@@ -37,27 +37,62 @@ def read_diver(folder, diver):
     return device, padi_dives
 
 
-def build_trips(dives, gap_days=TRIP_GAP_DAYS):
-    """Group dives of all divers into trips; a gap of more than gap_days starts a new trip."""
+def _auto_trips(dives, gap_days):
+    """Dives with no named trip: a gap of more than gap_days starts a new trip. -> list of trip dicts."""
     trips, last = [], None
-    ordered = sorted(dives, key=lambda d: d['date'] or '')
-    for d in ordered:
+    for d in sorted(dives, key=lambda d: d['date'] or ''):
         day = _date.fromisoformat(d['date'])
         if last is None or (day - last).days > gap_days:
-            trips.append({'id': day.strftime('%Y-%m'), 'label': day.strftime('%b %Y'),
-                          'start': d['date'], 'end': d['date'], 'n': 0})
-        t = trips[-1]
-        t['end'], t['n'] = d['date'], t['n'] + 1
-        d['trip'] = t
+            trips.append({'id': day.strftime('%Y-%m'), 'label': day.strftime('%b %Y'), 'dives': []})
+        trips[-1]['dives'].append(d)
         last = day
     seen = {}
-    for t in trips:                              # two trips in one month get a suffix
+    for t in trips:                              # two automatic trips in one month get a suffix
         seen[t['id']] = seen.get(t['id'], 0) + 1
         if seen[t['id']] > 1:
             t['id'] += f'-{seen[t["id"]]}'
-    for d in dives:
-        d['trip'] = d['trip']['id']
     return trips
+
+
+def build_trips(dives, named=None, gap_days=TRIP_GAP_DAYS):
+    """Group dives of all divers into trips and set each dive's `trip` to the trip id.
+
+    `named` is the list from data/trips.json: [{"id", "name", "start", "end"}]. A dive whose date falls inside a
+    named range joins that trip (first match wins); everything else is grouped automatically.
+    """
+    named = named or []
+    for n in named:
+        if not n.get('id') or not n.get('start') or not n.get('end') or n['end'] < n['start']:
+            raise ValueError(f'trips.json: each trip needs an id, a start and an end on or after it: {n}')
+    ids = [n['id'] for n in named]
+    if len(set(ids)) != len(ids):
+        raise ValueError('trips.json: trip ids must be unique')
+
+    trips, rest = [], []
+    claimed = {n['id']: [] for n in named}
+    for d in dives:
+        n = next((n for n in named if n['start'] <= d['date'] <= n['end']), None)
+        (claimed[n['id']] if n else rest).append(d)
+    for n in named:
+        if claimed[n['id']]:
+            trips.append({'id': n['id'], 'label': n.get('name') or n['id'], 'named': True, 'dives': claimed[n['id']]})
+    taken = set(ids)
+    for t in _auto_trips(rest, gap_days):
+        while t['id'] in taken:                  # an automatic id never reuses a name you chose
+            t['id'] += '-auto'
+        taken.add(t['id'])
+        trips.append(t)
+
+    out = []
+    for t in sorted(trips, key=lambda t: min(d['date'] for d in t['dives'])):
+        for d in t['dives']:
+            d['trip'] = t['id']
+        dates = sorted(d['date'] for d in t['dives'])
+        entry = {'id': t['id'], 'label': t['label'], 'start': dates[0], 'end': dates[-1], 'n': len(dates)}
+        if t.get('named'):
+            entry['named'] = True
+        out.append(entry)
+    return out
 
 
 def build(root=ROOT, write=True, log=print):
@@ -81,7 +116,7 @@ def build(root=ROOT, write=True, log=print):
     link.share_details(all_dives)
     sites.apply_coords(all_dives, data / 'site_coords.json')
     all_dives.sort(key=merge.sort_key)
-    trips = build_trips(all_dives)
+    trips = build_trips(all_dives, sites.load_json(data / 'trips.json', []))
     sites.apply_trip_defaults(all_dives, data / 'trip_defaults.json')
     clocks.localise(all_dives, data / 'clocks.json')
     sites.set_areas(all_dives)

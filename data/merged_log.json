@@ -15,95 +15,108 @@
  ],
  "trips": [
   {
-   "id": "2006-08",
-   "label": "Aug 2006",
+   "id": "great-barrier-reef-2006",
+   "label": "Great Barrier Reef 2006",
    "start": "2006-08-20",
    "end": "2006-08-22",
-   "n": 7
+   "n": 7,
+   "named": true
   },
   {
-   "id": "2007-07",
-   "label": "Jul 2007",
+   "id": "negril-2007",
+   "label": "Jamaica 2007",
    "start": "2007-07-03",
    "end": "2007-07-05",
-   "n": 7
+   "n": 7,
+   "named": true
   },
   {
-   "id": "2008-07",
-   "label": "Jul 2008",
+   "id": "kona-2008",
+   "label": "Hawaii 2008",
    "start": "2008-07-20",
    "end": "2008-07-21",
-   "n": 2
+   "n": 2,
+   "named": true
   },
   {
-   "id": "2012-09",
-   "label": "Sep 2012",
+   "id": "ionian-2012",
+   "label": "Sunsail 2012",
    "start": "2012-09-23",
    "end": "2012-09-23",
-   "n": 1
+   "n": 1,
+   "named": true
   },
   {
-   "id": "2018-05",
-   "label": "May 2018",
+   "id": "green-island-2018",
+   "label": "Great Barrier Reef 2018",
    "start": "2018-05-05",
    "end": "2018-05-06",
-   "n": 5
+   "n": 5,
+   "named": true
   },
   {
-   "id": "2018-06",
-   "label": "Jun 2018",
+   "id": "majorca-2018",
+   "label": "Majorca 2018",
    "start": "2018-06-02",
    "end": "2018-06-02",
-   "n": 1
+   "n": 1,
+   "named": true
   },
   {
-   "id": "2023-05",
-   "label": "May 2023",
+   "id": "jamaica-2023",
+   "label": "Jamaica 2023",
    "start": "2023-05-19",
    "end": "2023-05-24",
-   "n": 18
+   "n": 18,
+   "named": true
   },
   {
-   "id": "2023-07",
-   "label": "Jul 2023",
+   "id": "greece-2023",
+   "label": "Greece 2023",
    "start": "2023-07-07",
    "end": "2023-07-07",
-   "n": 4
+   "n": 4,
+   "named": true
   },
   {
-   "id": "2023-10",
-   "label": "Oct 2023",
+   "id": "egypt-2023",
+   "label": "Egypt 2023",
    "start": "2023-10-06",
    "end": "2023-10-10",
-   "n": 22
+   "n": 22,
+   "named": true
   },
   {
-   "id": "2024-02",
-   "label": "Feb 2024",
+   "id": "tulum-2024",
+   "label": "Tulum Cenotes 2024",
    "start": "2024-02-02",
    "end": "2024-02-03",
-   "n": 8
+   "n": 8,
+   "named": true
   },
   {
-   "id": "2025-01",
-   "label": "Jan 2025",
+   "id": "cabo-2025",
+   "label": "Cabo San Lucas 2025",
    "start": "2025-01-30",
    "end": "2025-01-31",
-   "n": 4
+   "n": 4,
+   "named": true
   },
   {
-   "id": "2026-01",
-   "label": "Jan 2026",
+   "id": "bahamas-2026",
+   "label": "Bahamas 2026",
    "start": "2026-01-29",
    "end": "2026-01-30",
-   "n": 4
+   "n": 4,
+   "named": true
   },
   {
-   "id": "2026-10",
-   "label": "Oct 2026",
+   "id": "jamaica-2026",
+   "label": "Jamaica 2026",
    "start": "2026-10-04",
    "end": "2026-10-10",
-   "n": 27
+   "n": 27,
+   "named": true
   }
  ],
  "groups": [
@@ -373,8 +386,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "(Group)",
+   "notes": "First ever dive! Aged 18 in Australia (with a group for a month). Spent about 4/5 days on a dive boat",
    "dive_center": null,
    "dive_type": "Boat",
    "visibility": "Average",
@@ -382,8 +395,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2006-08",
-   "group": null
+   "trip": "great-barrier-reef-2006",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918894",
@@ -409,7 +423,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Group",
    "notes": null,
    "dive_center": null,
    "dive_type": "Boat",
@@ -418,8 +432,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2006-08",
-   "group": null
+   "trip": "great-barrier-reef-2006",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918911",
@@ -445,7 +460,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Group",
    "notes": null,
    "dive_center": null,
    "dive_type": "Boat",
@@ -454,8 +469,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2006-08",
-   "group": null
+   "trip": "great-barrier-reef-2006",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918916",
@@ -490,8 +506,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2006-08",
-   "group": null
+   "trip": "great-barrier-reef-2006",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918921",
@@ -517,7 +534,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Group",
    "notes": null,
    "dive_center": null,
    "dive_type": "Boat",
@@ -526,8 +543,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2006-08",
-   "group": null
+   "trip": "great-barrier-reef-2006",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918927",
@@ -553,7 +571,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Group",
    "notes": null,
    "dive_center": null,
    "dive_type": "Boat",
@@ -562,8 +580,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2006-08",
-   "group": null
+   "trip": "great-barrier-reef-2006",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918934",
@@ -589,7 +608,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Group",
    "notes": null,
    "dive_center": null,
    "dive_type": "Boat",
@@ -598,8 +617,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2006-08",
-   "group": null
+   "trip": "great-barrier-reef-2006",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:11505364",
@@ -625,7 +645,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Family",
    "notes": null,
    "dive_center": "Beaches Negril",
    "dive_type": "Boat",
@@ -634,8 +654,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2007-07",
-   "group": null
+   "trip": "negril-2007",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9919173",
@@ -661,8 +682,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Instructor",
+   "notes": "Advanced open water dive 1",
    "dive_center": "Beaches Negril",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -670,8 +691,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2007-07",
-   "group": null
+   "trip": "negril-2007",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9919187",
@@ -697,7 +719,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Instructor",
    "notes": null,
    "dive_center": "Beaches Negril",
    "dive_type": "Boat",
@@ -706,8 +728,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2007-07",
-   "group": null
+   "trip": "negril-2007",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9919208",
@@ -733,7 +756,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Instructor",
    "notes": null,
    "dive_center": "Beaches Negril",
    "dive_type": "Boat",
@@ -742,8 +765,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2007-07",
-   "group": null
+   "trip": "negril-2007",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9919325",
@@ -769,7 +793,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Instructor",
    "notes": null,
    "dive_center": "Beaches Negril",
    "dive_type": "Boat",
@@ -778,8 +802,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2007-07",
-   "group": null
+   "trip": "negril-2007",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9919333",
@@ -805,7 +830,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Instructor",
    "notes": null,
    "dive_center": "Beaches Negril",
    "dive_type": "Boat",
@@ -814,8 +839,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2007-07",
-   "group": null
+   "trip": "negril-2007",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9919602",
@@ -841,7 +867,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Family",
    "notes": null,
    "dive_center": "Beaches Negril",
    "dive_type": "Boat",
@@ -850,8 +876,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2007-07",
-   "group": null
+   "trip": "negril-2007",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918616",
@@ -877,7 +904,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Family",
    "notes": null,
    "dive_center": "Kona Diving Company",
    "dive_type": "Boat",
@@ -886,8 +913,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2008-07",
-   "group": null
+   "trip": "kona-2008",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918817",
@@ -913,7 +941,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Family",
    "notes": null,
    "dive_center": "Kona Hawaii",
    "dive_type": "Boat",
@@ -922,8 +950,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2008-07",
-   "group": null
+   "trip": "kona-2008",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918678",
@@ -949,8 +978,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Ed",
+   "notes": "Ed’s first ever dive : )",
    "dive_center": null,
    "dive_type": "Boat",
    "visibility": "Average",
@@ -958,8 +987,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2012-09",
-   "group": null
+   "trip": "ionian-2012",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918570",
@@ -985,7 +1015,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Jade (and the group)",
    "notes": null,
    "dive_center": "Coral Sea Dreaming",
    "dive_type": "Boat",
@@ -994,8 +1024,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2018-05",
-   "group": null
+   "trip": "green-island-2018",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918626",
@@ -1021,8 +1052,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Jade (and the group)",
+   "notes": "First dive on the dive boat",
    "dive_center": "Coral Sea Dreaming",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -1030,8 +1061,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2018-05",
-   "group": null
+   "trip": "green-island-2018",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918732",
@@ -1057,7 +1089,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Jade (and the group)",
    "notes": null,
    "dive_center": "Coral Sea Dreaming",
    "dive_type": "Boat",
@@ -1066,8 +1098,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2018-05",
-   "group": null
+   "trip": "green-island-2018",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918744",
@@ -1093,7 +1126,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Jade (and the group)",
    "notes": null,
    "dive_center": "Coral Sea Dreaming",
    "dive_type": "Boat",
@@ -1102,8 +1135,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2018-05",
-   "group": null
+   "trip": "green-island-2018",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918579",
@@ -1129,7 +1163,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Jade (and the group)",
    "notes": null,
    "dive_center": "Coral Sea Dreaming",
    "dive_type": "Boat",
@@ -1138,8 +1172,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2018-05",
-   "group": null
+   "trip": "green-island-2018",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918544",
@@ -1165,8 +1200,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Dive instructor and a group ",
+   "notes": "Very cold!",
    "dive_center": "Soller divers",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -1174,8 +1209,9 @@
    "suit": "FullSuit_3mm",
    "rating": null,
    "suspect": false,
-   "trip": "2018-06",
-   "group": null
+   "trip": "majorca-2018",
+   "group": null,
+   "venue": null
   },
   {
    "id": "EG:padi:9910020",
@@ -1210,7 +1246,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": null,
    "venue": null
   },
@@ -1238,8 +1274,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Ed",
+   "notes": "First dive of the holiday (after pool refresher training)",
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -1247,8 +1283,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": null
+   "trip": "jamaica-2023",
+   "group": null,
+   "venue": null
   },
   {
    "id": "EG:padi:9910025",
@@ -1283,7 +1320,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": null,
    "venue": null
   },
@@ -1320,7 +1357,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": null,
    "venue": null
   },
@@ -1357,7 +1394,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": "ge81ec98f",
    "venue": null
   },
@@ -1385,7 +1422,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Ed ",
    "notes": null,
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
@@ -1394,8 +1431,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": "ge81ec98f"
+   "trip": "jamaica-2023",
+   "group": "ge81ec98f",
+   "venue": null
   },
   {
    "id": "RA:padi:9918554",
@@ -1421,8 +1459,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Ed",
+   "notes": "Dive with the family! Plus Alana (minus mum)",
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -1430,8 +1468,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": null
+   "trip": "jamaica-2023",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918764",
@@ -1457,8 +1496,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Ed",
+   "notes": "Plane wreck dive",
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -1466,8 +1505,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": null
+   "trip": "jamaica-2023",
+   "group": null,
+   "venue": null
   },
   {
    "id": "EG:padi:9910039",
@@ -1502,7 +1542,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": "gcb7aaa84",
    "venue": null
   },
@@ -1539,7 +1579,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": "ga0bc43cd",
    "venue": null
   },
@@ -1567,8 +1607,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Ed",
+   "notes": "Dive with Wd, Ems and Sean",
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
    "visibility": "High",
@@ -1576,8 +1616,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": null
+   "trip": "jamaica-2023",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918805",
@@ -1603,8 +1644,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Ed",
+   "notes": "Quick training dive for Ed",
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -1612,8 +1653,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": "gcb7aaa84"
+   "trip": "jamaica-2023",
+   "group": "gcb7aaa84",
+   "venue": null
   },
   {
    "id": "RA:padi:9918835",
@@ -1639,8 +1681,8 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
-   "notes": null,
+   "buddies": "Ed and instructor ",
+   "notes": "Second quick training dive for Ed",
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
    "visibility": "Average",
@@ -1648,8 +1690,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": "ga0bc43cd"
+   "trip": "jamaica-2023",
+   "group": "ga0bc43cd",
+   "venue": null
   },
   {
    "id": "EG:padi:9910046",
@@ -1684,7 +1727,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": null,
    "venue": null
   },
@@ -1721,7 +1764,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": null,
    "venue": null
   },
@@ -1749,7 +1792,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Ed and the group",
    "notes": null,
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
@@ -1758,8 +1801,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": null
+   "trip": "jamaica-2023",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:padi:9918862",
@@ -1785,7 +1829,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Ed and the group ",
    "notes": null,
    "dive_center": "Sandals Negril",
    "dive_type": "Boat",
@@ -1794,8 +1838,9 @@
    "suit": "NoExposure",
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
-   "group": null
+   "trip": "jamaica-2023",
+   "group": null,
+   "venue": null
   },
   {
    "id": "EG:padi:9910035",
@@ -1830,7 +1875,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-05",
+   "trip": "jamaica-2023",
    "group": null,
    "venue": null
   },
@@ -1858,7 +1903,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Ed",
    "notes": null,
    "dive_center": "Athen’s diver’s club",
    "dive_type": "Boat",
@@ -1867,8 +1912,9 @@
    "suit": "FullSuit_5mm",
    "rating": null,
    "suspect": false,
-   "trip": "2023-07",
-   "group": "g08e162f4"
+   "trip": "greece-2023",
+   "group": "g08e162f4",
+   "venue": null
   },
   {
    "id": "RA:padi:10192732",
@@ -1894,7 +1940,7 @@
     "assumed": true
    },
    "profile": null,
-   "buddies": null,
+   "buddies": "Ed",
    "notes": null,
    "dive_center": "Athen’s Diver’s Club",
    "dive_type": "Boat",
@@ -1903,8 +1949,9 @@
    "suit": "FullSuit_5mm",
    "rating": null,
    "suspect": false,
-   "trip": "2023-07",
-   "group": "g4f02338c"
+   "trip": "greece-2023",
+   "group": "g4f02338c",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_64a81c233866d156560cd21b",
@@ -2832,7 +2879,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-07",
+   "trip": "greece-2023",
    "group": "g08e162f4",
    "venue": null
   },
@@ -3718,7 +3765,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-07",
+   "trip": "greece-2023",
    "group": "g4f02338c",
    "venue": null
   },
@@ -4988,8 +5035,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "g9cde0919"
+   "trip": "egypt-2023",
+   "group": "g9cde0919",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_651fdcb4b177fc000671b2ce",
@@ -5861,7 +5909,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "g9cde0919",
    "venue": null
   },
@@ -6847,7 +6895,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "ga4f60143",
    "venue": null
   },
@@ -8273,8 +8321,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "ga4f60143"
+   "trip": "egypt-2023",
+   "group": "ga4f60143",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6521735759b205215cfebef0",
@@ -9214,7 +9263,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "g7c6a2a75",
    "venue": null
   },
@@ -10516,8 +10565,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "g7c6a2a75"
+   "trip": "egypt-2023",
+   "group": "g7c6a2a75",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6521735759b205215cfebef3",
@@ -11465,7 +11515,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "g9b0b0b25",
    "venue": null
   },
@@ -12767,8 +12817,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "g9b0b0b25"
+   "trip": "egypt-2023",
+   "group": "g9b0b0b25",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6521737530b9b4094a0796b1",
@@ -13808,7 +13859,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "g6cc9562b",
    "venue": null
   },
@@ -15226,8 +15277,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "g6cc9562b"
+   "trip": "egypt-2023",
+   "group": "g6cc9562b",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_65237d80e939aa4b30cb55e2",
@@ -16091,7 +16143,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "g2025eaf5",
    "venue": null
   },
@@ -17245,8 +17297,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "g2025eaf5"
+   "trip": "egypt-2023",
+   "group": "g2025eaf5",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_65237d80e939aa4b30cb55e0",
@@ -18154,7 +18207,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "g9b178452",
    "venue": null
   },
@@ -19376,8 +19429,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "g9b178452"
+   "trip": "egypt-2023",
+   "group": "g9b178452",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_65237d7eecf5552e3580202b",
@@ -20429,7 +20483,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "gce55fd95",
    "venue": null
   },
@@ -21971,8 +22025,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "gce55fd95"
+   "trip": "egypt-2023",
+   "group": "gce55fd95",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_65242b090fb9164e8fcf4740",
@@ -22816,7 +22871,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "gd5b77b8b",
    "venue": null
   },
@@ -24030,8 +24085,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "gd5b77b8b"
+   "trip": "egypt-2023",
+   "group": "gd5b77b8b",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_65242b0a0fb9164e8fcf4743",
@@ -25203,7 +25259,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": "g96f947d5",
    "venue": null
   },
@@ -26801,8 +26857,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
-   "group": "g96f947d5"
+   "trip": "egypt-2023",
+   "group": "g96f947d5",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_65312720f66048084749471c",
@@ -26833,7 +26890,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": null,
    "venue": null
   },
@@ -26866,7 +26923,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2023-10",
+   "trip": "egypt-2023",
    "group": null,
    "venue": null
   },
@@ -27888,8 +27945,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw1991f3bc9e",
@@ -29077,8 +29135,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:swcf1c58f28a",
@@ -29618,8 +29677,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw7e367ca0b7",
@@ -30407,8 +30467,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:swa2cb6bf0b5",
@@ -31528,8 +31589,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:swb2bfe2b4a2",
@@ -32817,8 +32879,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw15fed681a4",
@@ -33558,8 +33621,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw002e30f854",
@@ -33975,8 +34039,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2024-02",
-   "group": null
+   "trip": "tulum-2024",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:swd3e70e9e2d",
@@ -35004,8 +35069,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2025-01",
-   "group": null
+   "trip": "cabo-2025",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw905da6a986",
@@ -35909,8 +35975,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2025-01",
-   "group": null
+   "trip": "cabo-2025",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:swb47e8e20b5",
@@ -36958,8 +37025,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2025-01",
-   "group": null
+   "trip": "cabo-2025",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw25c87ad4c2",
@@ -38127,8 +38195,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2025-01",
-   "group": null
+   "trip": "cabo-2025",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:swea0d3f1a83",
@@ -39120,8 +39189,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-01",
-   "group": null
+   "trip": "bahamas-2026",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw08690faca5",
@@ -40133,8 +40203,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-01",
-   "group": null
+   "trip": "bahamas-2026",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw65a348582e",
@@ -41110,8 +41181,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-01",
-   "group": null
+   "trip": "bahamas-2026",
+   "group": null,
+   "venue": null
   },
   {
    "id": "RA:sw:sw3cb15cdf17",
@@ -42343,8 +42415,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-01",
-   "group": null
+   "trip": "bahamas-2026",
+   "group": null,
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ac2d08661dafa7be09a6659",
@@ -42420,7 +42493,7 @@
    "suit": null,
    "rating": null,
    "suspect": true,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -43094,7 +43167,7 @@
    "suit": null,
    "rating": 3,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "g76063128",
    "venue": null
   },
@@ -44096,8 +44169,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "g76063128"
+   "trip": "jamaica-2026",
+   "group": "g76063128",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ac4a223bf5b7609b189f663",
@@ -44737,7 +44811,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "g474af4e3",
    "venue": null
   },
@@ -45695,8 +45769,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "g474af4e3"
+   "trip": "jamaica-2026",
+   "group": "g474af4e3",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ac56845b2e3b4b42a255b08",
@@ -46456,7 +46531,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "g0c7872b7",
    "venue": null
   },
@@ -47090,7 +47165,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "g19861d43",
    "venue": null
   },
@@ -48216,8 +48291,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "g0c7872b7"
+   "trip": "jamaica-2026",
+   "group": "g0c7872b7",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ac56842b2e3b4b42a255b03",
@@ -48269,7 +48345,7 @@
    "suit": null,
    "rating": null,
    "suspect": true,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -49211,8 +49287,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "g19861d43"
+   "trip": "jamaica-2026",
+   "group": "g19861d43",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ac79d229c1be9c5caf560e0",
@@ -49852,7 +49929,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "g9a8d7e9b",
    "venue": null
   },
@@ -50574,7 +50651,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "g700116a7",
    "venue": null
   },
@@ -51508,8 +51585,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "g9a8d7e9b"
+   "trip": "jamaica-2026",
+   "group": "g9a8d7e9b",
+   "venue": null
   },
   {
    "id": "RA:sw:sw4d4b5f2e2b",
@@ -52561,8 +52639,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "g700116a7"
+   "trip": "jamaica-2026",
+   "group": "g700116a7",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ac8d6a7ea89bcb6fa827ad3",
@@ -53206,7 +53285,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "ge44c98d1",
    "venue": null
   },
@@ -54152,8 +54231,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "ge44c98d1"
+   "trip": "jamaica-2026",
+   "group": "ge44c98d1",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ac929a4e929bf377f0fafdb",
@@ -54613,7 +54693,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "gb63dab58",
    "venue": null
   },
@@ -55239,7 +55319,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": "g81a0fbdf",
    "venue": null
   },
@@ -55913,8 +55993,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "gb63dab58"
+   "trip": "jamaica-2026",
+   "group": "gb63dab58",
+   "venue": null
   },
   {
    "id": "RA:sw:swa618d20485",
@@ -56826,8 +56907,9 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
-   "group": "g81a0fbdf"
+   "trip": "jamaica-2026",
+   "group": "g81a0fbdf",
+   "venue": null
   },
   {
    "id": "EG:uddf:dive_6ad4dec6706b42c8b933bf9b",
@@ -56858,7 +56940,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -56891,7 +56973,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -56924,7 +57006,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -56957,7 +57039,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -56990,7 +57072,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -57023,7 +57105,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   },
@@ -57056,7 +57138,7 @@
    "suit": null,
    "rating": null,
    "suspect": false,
-   "trip": "2026-10",
+   "trip": "jamaica-2026",
    "group": null,
    "venue": null
   }

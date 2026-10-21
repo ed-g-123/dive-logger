@@ -1,17 +1,17 @@
 {
-  "RA:2024-02": {
+  "RA:tulum-2024": {
     "lat": 20.2114,
     "lon": -87.4654,
     "area": "Tulum, Mexico",
     "note": "Tulum town; used for RA dives with no site name or position. Specific cenotes in site_coords.json take priority."
   },
-  "RA:2025-01": {
+  "RA:cabo-2025": {
     "lat": 22.8767,
     "lon": -109.9136,
     "area": "Cabo San Lucas, Mexico",
     "note": "Cabo San Lucas harbour; approximate."
   },
-  "RA:2026-01": {
+  "RA:bahamas-2026": {
     "lat": 25.0343,
     "lon": -77.3963,
     "area": "Bahamas",

@@ -16,6 +16,9 @@ data/
   divers/RA/padi/*.json        RA's PADI exports: just drop them in
   site_aliases.json            Oceanic+ site ids -> readable names (your edits are kept)
   site_coords.json             site name -> lat/lon, for dives with no position
+  trip_defaults.json           fallback position for a diver's unpositioned dives on a trip
+  clocks.json                  what clock each Shearwater trip/day used (utc or local) and the zone offset
+  trips.json                   your named trips (id, name, start, end); other dives are grouped automatically
   links.json                   manual overrides for shared dives
   review.json                  (generated) possible shared dives that need a decision
   merged_log.json              (generated) what the page reads
@@ -52,7 +55,9 @@ to the minute and the site name. Venue, buddy and notes are left out unless you 
    Override in `data/links.json`: `{"link": [["EG:uddf:...", "RA:sw:..."]], "unlink": [[...]]}`.
 3. A linked dive is drawn once on the map and shows both profiles on one chart; gaps (site name, position) are
    filled from the partner record, never overwritten.
-4. **Trips:** a gap of more than 7 days starts a new trip.
+4. **Trips:** dives inside a range in `data/trips.json` join that named trip (all divers); the rest are grouped automatically (a gap of
+   more than 7 days starts a new trip, id like `2026-10`). Use the trip ids from `trips.json` as the keys in `clocks.json` and
+   `trip_defaults.json` (`RA:tulum-2024`); they don't change when dives are added.
 
 ## Assumptions
 
