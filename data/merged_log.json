@@ -138,6 +138,16 @@
    "confidence": "high"
   },
   {
+   "id": "g08e162f4",
+   "date": "2023-07-07",
+   "members": [
+    "EG:uddf:dive_64a81c233866d156560cd21b",
+    "RA:padi:10192719"
+   ],
+   "method": "manual",
+   "confidence": "high"
+  },
+  {
    "id": "g4f02338c",
    "date": "2023-07-07",
    "members": [
@@ -1858,7 +1868,7 @@
    "rating": null,
    "suspect": false,
    "trip": "2023-07",
-   "group": null
+   "group": "g08e162f4"
   },
   {
    "id": "RA:padi:10192732",
@@ -1906,7 +1916,7 @@
    "time": "11:11",
    "time_basis": "unknown",
    "title": null,
-   "site": "Cape Sounion, Greece",
+   "site": "Seal Cave",
    "area": "Cape Sounion, Greece",
    "lat": 37.645065,
    "lon": 23.94228,
@@ -2823,7 +2833,7 @@
    "rating": null,
    "suspect": false,
    "trip": "2023-07",
-   "group": null,
+   "group": "g08e162f4",
    "venue": null
   },
   {
@@ -2836,7 +2846,7 @@
    "time": "14:41",
    "time_basis": "unknown",
    "title": null,
-   "site": "Cape Sounion, Greece",
+   "site": "Blue Canyon",
    "area": "Cape Sounion, Greece",
    "lat": 37.708447,
    "lon": 23.894405,
