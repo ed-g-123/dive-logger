@@ -19,6 +19,7 @@ const srcLabel = d => d.sources.length > 1 ? 'merged' : (SRC[d.sources[0]] || d.
 const diverOf = id => state.divers.find(x => x.id === id) || { id, label: id, colour: '#0e7c7b' };
 const colourOf = d => diverOf(d.diver).colour;
 const mates = d => d.group ? state.dives.filter(x => x.group === d.group && x.id !== d.id) : [];
+const isMobile = () => window.matchMedia('(max-width: 980px)').matches;
 const timeLabel = d => d.time ? d.time + (d.time_basis === 'utc' ? ' UTC' : '') : '';
 const byTime = (a, b) => (a.date || '').localeCompare(b.date || '')
   || (a.time || '').localeCompare(b.time || '')
@@ -42,6 +43,13 @@ async function init() {
   }
   buildTripChips();
   ['f-mode', 'f-year', 'f-site'].forEach(id => document.getElementById(id).addEventListener('input', applyFilters));
+  document.getElementById('filters-toggle').addEventListener('click', e => {
+    const box = document.getElementById('controls');
+    const open = box.classList.toggle('open');
+    e.currentTarget.setAttribute('aria-expanded', String(open));
+  });
+  document.getElementById('sheet-close').addEventListener('click', closeSheet);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
   applyFilters();
 }
 
@@ -92,6 +100,8 @@ function applyFilters() {
   const mode = document.getElementById('f-mode').value;
   const year = document.getElementById('f-year').value;
   const site = document.getElementById('f-site').value.trim().toLowerCase();
+  const active = (mode !== 'all') + (year !== 'all');           // shown on the phone's Filters button
+  document.getElementById('filter-count').textContent = active || '';
   state.filtered = state.dives.filter(d => {
     if (!inDiver(d)) return false;
     if (state.trip !== 'all' && d.trip !== state.trip) return false;
@@ -124,16 +134,17 @@ function renderStats() {
     ? state.divers.map(v => `${v.label} ${ds.filter(d => d.diver === v.id).length}`).join(' · ') : '';
   const together = new Set(ds.filter(d => d.group).map(d => d.group)).size;
   const cards = [
-    [ds.length, 'scuba dives', [split, together && state.diver === 'all' ? `${together} together` : '',
-                                free ? `plus ${free} freedive${free === 1 ? '' : 's'}` : ''].filter(Boolean).join(' · ')],
-    [fmt.time(Math.round(mins)), 'bottom time', ds.length ? `avg ${Math.round(mins / ds.length)} min a dive` : ''],
-    [fmt.n(deepest?.max_depth_m, ' m'), 'deepest', deepest ? `${fmt.date(deepest.date)} · ${deepest.site || ''}` : ''],
-    [fmt.n(avg, ' m'), 'average max depth', ''],
-    [temps.length ? `${Math.min(...temps)}–${Math.max(...temps)} °C` : '—', 'water temperature', temps.length ? `${temps.length} dives with a reading` : 'none recorded'],
-    [ds.length ? `${nitrox} of ${ds.length}` : '—', 'on nitrox', ''],
+    [ds.length, 'scuba dives'],
+    [fmt.time(Math.round(mins)), 'bottom time'],
+    [fmt.n(deepest?.max_depth_m, ' m'), 'deepest'],
+    [fmt.n(avg, ' m'), 'avg max depth'],
+    [ds.length ? `${nitrox} of ${ds.length}` : '—', 'on nitrox'],
   ];
+  const extra = [split, together && state.diver === 'all' ? `${together} together` : '',
+                 free ? `plus ${free} freedive${free === 1 ? '' : 's'}` : ''].filter(Boolean);
   document.getElementById('stat-cards').innerHTML =
-    cards.map(([v, l, s]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${l}</div>${s ? `<div class="s">${esc(s)}</div>` : ''}</div>`).join('');
+    cards.map(([v, l]) => `<div class="stat"><div class="v">${esc(v)}</div><div class="l">${l}</div></div>`).join('') +
+    (extra.length ? `<div class="stat extra">${extra.map(t => `<span>${esc(t)}</span>`).join('')}</div>` : '');
   const flagged = all.filter(d => d.suspect).length;
   document.getElementById('count').textContent =
     `${all.length} record${all.length === 1 ? '' : 's'}${flagged ? ` · ${flagged} flagged and left out of totals` : ''}`;
@@ -149,15 +160,24 @@ function renderTable() {
     if (d.suspect) tr.classList.add('flagged');
     if (state.selected === d.id) tr.classList.add('active');
     const num = state.numbered.get(d.id);
+    const multi = state.divers.length > 1;
+    const who = mates(d).map(m => diverOf(m.diver).label).join(', ');
+    const together = d.group ? `<span class="badge together" title="Dived together with ${esc(who)}">🤗 with ${esc(who)}</span>` : '';
+    const chip = multi ? `<span class="diver-chip" style="background:${esc(colourOf(d))}">${esc(diverOf(d.diver).label)}</span>` : '';
+    const meta = [fmt.date(d.date) + (d.time ? ', ' + esc(timeLabel(d)) : ''), fmt.time(d.duration_min), d.water_temp_c != null ? fmt.n(d.water_temp_c, '°') : '']
+      .filter(Boolean).join(' · ');
     tr.innerHTML = `
-      <td>${num ?? '—'}</td>
-      <td>${fmt.date(d.date)}${d.time ? ' ' + esc(timeLabel(d)) : ''}</td>
-      <td>${state.diver === 'all' && state.divers.length > 1 ? `<span class="diver-chip" style="background:${esc(colourOf(d))}">${esc(diverOf(d.diver).label)}</span> ` : ''} ${d.group ? `<span class="badge together" title="Dived together with ${esc(mates(d).map(m => diverOf(m.diver).label).join(', '))}">🤗</span> ` : ''} ${esc(d.site) || '—'} ${d.suspect ? ' <span class="badge warn">flagged</span>' : ''}</td>
-      <td>${fmt.n(d.max_depth_m, ' m')}</td>
-      <td>${fmt.time(d.duration_min)}</td>
-      <td>${fmt.n(d.water_temp_c, '°')}</td>
-      <td>${isNitrox(d) ? `<span class="nitrox-badge">${Math.round(d.gas.o2 * 100)}</span>` : ''}</td>
-      <td>${isScuba(d) ? '' : '<span class="badge src">freedive</span>'}</td>`;
+      <td class="c-num">${num ?? '—'}</td>
+      <td class="c-date">${fmt.date(d.date)}${d.time ? ' ' + esc(timeLabel(d)) : ''}</td>
+      <td class="c-site">${state.diver === 'all' && multi ? `<span class="d-only">${chip} </span>` : ''}${esc(d.site) || '—'}${d.group ? ` <span class="d-only">${together}</span>` : ''}${d.suspect ? ' <span class="badge warn">flagged</span>' : ''}</td>
+      <td class="c-max">${fmt.n(d.max_depth_m, ' m')}</td>
+      <td class="c-time">${fmt.time(d.duration_min)}</td>
+      <td class="c-temp">${fmt.n(d.water_temp_c, '°')}</td>
+      <td class="c-gas">${isNitrox(d) ? `<span class="nitrox-badge">${Math.round(d.gas.o2 * 100)}</span>` : ''}</td>
+      <td class="c-free">${isScuba(d) ? '' : '<span class="badge src">freedive</span>'}</td>
+      <td class="m-chip">${multi ? `<span class="m-dot" style="background:${esc(colourOf(d))}">${esc(diverOf(d.diver).label)}</span>` : ''}</td>
+      <td class="m-meta">${meta}${isNitrox(d) ? ` <span class="nitrox-badge">${Math.round(d.gas.o2 * 100)}</span>` : ''}${isScuba(d) ? '' : ' <span class="badge src">freedive</span>'}</td>
+      <td class="m-tag">${together}</td>`;
     tr.addEventListener('click', () => onRowActivate(d.id));
     tr.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onRowActivate(d.id); }
@@ -167,14 +187,14 @@ function renderTable() {
 }
 
 function onRowActivate(id) {
-  if (state.selected === id) fitMap();                    // click the selected row again to zoom back out
-  else {
-    selectDive(id, { pan: true });
-    // on a phone the details sit below the list, so bring them into view
-    if (window.matchMedia('(max-width: 980px)').matches)
-      document.getElementById('right').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  if (state.selected === id) {                            // tap the selected dive again
+    if (isMobile()) openSheet(); else fitMap();           // phone: reopen the details; desktop: zoom back out
+  } else selectDive(id, { pan: true, sheet: isMobile() });
 }
+
+// On a phone the profile and details live in a bottom sheet over the lower part of the screen.
+function openSheet() { document.getElementById('sheet').classList.add('open'); }
+function closeSheet() { document.getElementById('sheet').classList.remove('open'); }
 
 // ------------------------------------------------------------------ map ----
 let map, clusterLayer, pulseLayer;
@@ -312,7 +332,7 @@ function renderMap() {
       .bindPopup(`<b>${esc(d.site) || 'Unnamed site'}</b><br>${fmt.date(d.date)} · ${fmt.n(d.max_depth_m, ' m')} · ${fmt.time(d.duration_min)}` +
         (state.divers.length > 1 ? `<br>${[d, ...mates(d).filter(inDiver)].map(x => esc(diverOf(x.diver).label)).join(' + ')}` : ''))
       .addTo(clusterLayer)
-      .on('click', () => selectDive(d.id, { pan: false }));
+      .on('click', () => selectDive(d.id, { pan: false, sheet: isMobile() }));
   }
   fitMap();
 
@@ -361,6 +381,7 @@ function selectDive(id, opts = {}) {
     prof.innerHTML = '';
     Plotly.newPlot(prof, traces, {
       margin: { t: 30, r: 16, b: 36, l: 44 },
+      height: isMobile() ? 230 : undefined,
       xaxis: { title: 'time (min)' },
       yaxis: { title: 'depth (m)', autorange: 'reversed' },
       title: { text: `${label} profile${traces.length > 1 ? ' (shared dive)' : ''}`, font: { size: 14 } },
@@ -370,7 +391,7 @@ function selectDive(id, opts = {}) {
     const why = d.sources[0] === 'padi' && d.sources.length === 1
       ? 'PADI logbook entries have no depth profile.'
       : 'No depth profile recorded for this dive.';
-    prof.innerHTML = `<div style="padding:20px;min-height:260px;box-sizing:border-box;opacity:.6;font-size:.9rem">${why}</div>`;
+    prof.innerHTML = `<div style="padding:20px;min-height:${isMobile() ? 56 : 260}px;box-sizing:border-box;opacity:.6;font-size:.9rem">${why}</div>`;
   }
 
   // details
@@ -396,9 +417,17 @@ function selectDive(id, opts = {}) {
     ['Notes', esc(d.notes)],
   ].filter(([k, v]) => v != null && v !== '');
 
+  const pair = [d, ...mates(d)].sort((x, y) => state.divers.findIndex(v => v.id === x.diver) - state.divers.findIndex(v => v.id === y.diver));
+  const switcher = pair.length > 1
+    ? `<div class="mate-switch" role="group" aria-label="Switch between the divers on this dive">` +
+      pair.map(x => `<button type="button" data-id="${esc(x.id)}" aria-pressed="${x.id === d.id}"><i style="background:${esc(colourOf(x))}"></i>${esc(diverOf(x.diver).label)} · ${fmt.n(x.max_depth_m, ' m')}</button>`).join('') + '</div>'
+    : '';
   document.getElementById('detail').innerHTML =
-    `<h3>${label[0].toUpperCase() + label.slice(1)}${d.title ? ' — ' + esc(d.title) : ''}</h3><dl>` +
+    `<h3>${label[0].toUpperCase() + label.slice(1)}${d.title ? ' — ' + esc(d.title) : ''}</h3>${switcher}<dl>` +
     rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('') + '</dl>';
+  document.querySelectorAll('#detail .mate-switch button').forEach(b =>
+    b.addEventListener('click', () => selectDive(b.dataset.id, { pan: false, sheet: document.getElementById('sheet').classList.contains('open') })));
+  if (opts.sheet) openSheet();
 
   if (map && pulseLayer) {                                  // a pulsing ring marks the selected dive
     pulseLayer.clearLayers();

@@ -6,7 +6,7 @@
 <title>Dive Log</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-<link rel="stylesheet" href="assets/style.css?v=13">
+<link rel="stylesheet" href="assets/style.css?v=14">
 <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
@@ -15,19 +15,25 @@
 <header>
   <h1>🤿 Dive Log</h1>
   <div id="stat-cards"></div>
+  <div id="divers" role="group" aria-label="Filter by diver"></div>
 </header>
 
-<div id="divers" role="group" aria-label="Filter by diver"></div>
 <div id="trips" role="group" aria-label="Filter by trip"></div>
 
 <div id="controls">
-  <select id="f-mode">
-    <option value="all">All dives</option>
-    <option value="opencircuit" selected>Scuba</option>
-    <option value="other">Snorkel / other</option>
-  </select>
-  <select id="f-year"><option value="all">All years</option></select>
-  <input id="f-site" type="search" placeholder="Filter by site…">
+  <button id="filters-toggle" type="button" aria-expanded="false" aria-controls="filter-fields">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 4h12M4.5 8h7M7 12h2"/></svg>
+    Filters <span id="filter-count"></span>
+  </button>
+  <div id="filter-fields">
+    <select id="f-mode" aria-label="Dive type">
+      <option value="all">All dives</option>
+      <option value="opencircuit" selected>Scuba</option>
+      <option value="other">Snorkel / other</option>
+    </select>
+    <select id="f-year" aria-label="Year"><option value="all">All years</option></select>
+  </div>
+  <input id="f-site" type="search" placeholder="Filter by site…" aria-label="Filter by site">
   <span id="count"></span>
 </div>
 
@@ -45,11 +51,17 @@
   <div id="right">
     <div id="map"></div>
     <div id="map-note"></div>
-    <div id="profile"></div>
-    <div id="detail"></div>
+    <div id="sheet" aria-label="Dive details">
+      <div id="sheet-bar">
+        <span id="sheet-handle"></span>
+        <button id="sheet-close" type="button" aria-label="Close details"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+      </div>
+      <div id="profile"></div>
+      <div id="detail"></div>
+    </div>
   </div>
 </div>
 
-<script src="assets/app.js?v=13"></script>
+<script src="assets/app.js?v=14"></script>
 </body>
 </html>
