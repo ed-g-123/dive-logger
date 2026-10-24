@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# raw device exports never go in the repo (see README)
+private/
+*.db

@@ -1,0 +1,23 @@
+name: Test, build and commit the merged log
+on:
+  push:
+    branches: [main]
+    paths: ['data/**', 'pipeline/**', 'tests/**', '.github/workflows/**']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.x' }
+      - name: Run tests
+        run: python3 -m unittest discover -s tests
+      - name: Build data/merged_log.json
+        run: python3 -m pipeline.build
+      - name: Commit generated files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: regenerate merged_log.json'
+          file_pattern: 'data/merged_log.json data/site_aliases.json data/review.json'
