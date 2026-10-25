@@ -28,7 +28,7 @@ header h1 { margin:0; font-size:1.4rem; white-space:nowrap; }
 #trips button[aria-pressed="true"] { background:var(--ink); color:#fff; border-color:var(--ink); }
 #trips button small { opacity:.65; margin-left:4px; }
 /* "All trips" stays put at the left edge while the individual trips scroll under it */
-#trips button:first-child { position:sticky; left:24px; z-index:1; box-shadow:-20px 0 0 4px var(--bg), -40px 0 0 4px var(--bg); }
+#trips button:first-child { position:sticky; left:0; z-index:1; box-shadow:-20px 0 0 4px var(--bg), -40px 0 0 4px var(--bg); }
 
 /* ---- filters ---- */
 #controls { display:flex; gap:10px; padding:8px 24px; align-items:center; flex-wrap:wrap; }
